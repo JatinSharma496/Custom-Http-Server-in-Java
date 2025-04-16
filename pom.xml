@@ -7,7 +7,8 @@
     <groupId>org.example</groupId>
     <artifactId>CustomHTTPServer</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <!-- Dependencies-->
+    <!-- Dependencies used to parse json file , databind allow us to transform the json file into
+    a POJO (configuration file )-->
     <dependencies>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

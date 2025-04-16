@@ -1,18 +1,23 @@
 package com.coderfromscratch.httpserver.config;
-
+/*
+file to map with  the Json
+ */
 public class Configuration {
+    // extracted from json
+
     private int port;
     private  String webroot;
 
-    public int getPort() {
+    // now  get and set members from json
+    // getter and setter
+
+    public int getPort(){
         return port;
     }
-
-    public void setPort(int port) {
-        this.port = port;
+    public void setPort(int port){
+        this.port=port;
     }
-
-    public String getWebroot() {
+    public  String getWebroot(){
         return webroot;
     }
 
