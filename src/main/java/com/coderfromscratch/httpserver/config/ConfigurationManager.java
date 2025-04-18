@@ -11,16 +11,26 @@ import java.io.IOException;
 
 /*
 making Configuration manager singleton : because we only need 1 configuration manager
+becuase it could be shared across everywhere in the project
 so we initialized as static its object
+ Purpose :
+ Loads the configuration file(http.json)
+ Parses it into a Configuration object
+ Provides access to this configuration throughout the http server
  */
+
+/*
+* COnfiguration Manager has a configuration
+* it doesnt inhert from it but is owns/uses it --> association
+* */
 public class ConfigurationManager {
     private static ConfigurationManager myConfigurationManager;
-
+    // this configuration object holds the json data that is port and webroot
     private static  Configuration myCurrentConfiguration;
 
     // constructor
     private ConfigurationManager(){
-
+   // i made it private to prevent direct instantiation from the outside of the class
     }
     // this function is just returning the instacne object of confi.. manager
     // it is static so it will run singleton
@@ -38,12 +48,17 @@ public class ConfigurationManager {
     or we have no permission to read file
      */
     public void loadConfigurationFile(String filepath ) {
+        // reads the entire content for the json file
+        // converts it to a Configuration object
+        //strores it in myCrrenCOnfiguration
         FileReader fileReader = null;
+
         try {
             fileReader = new FileReader(filepath);
         } catch (FileNotFoundException e) {
             throw new HttpConfigurationException(e);
         }
+        // read the file character by character
         StringBuffer sb=new StringBuffer();
         int i;
         while(true){
@@ -54,6 +69,11 @@ public class ConfigurationManager {
             }
             sb.append((char)i);
         }
+        // USes a utility class(JSON) to
+        /*
+        * Parse the Json string into tree (JSon NOde)
+        * convert into a configuration objrct
+        * */
         JsonNode conf = null;
         try {
             conf = Json.parse(sb.toString());

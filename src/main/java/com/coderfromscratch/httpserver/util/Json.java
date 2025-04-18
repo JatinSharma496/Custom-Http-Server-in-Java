@@ -48,6 +48,7 @@ private static ObjectMapper myObjectMapper = defaultObjectMapper();
     }
 
     // to see json node in string
+    // to make it simple looking
     private  static String generateJson(Object o,boolean pretty) throws JsonProcessingException {
         ObjectWriter objectWriter=myObjectMapper.writer();
         if(pretty){
