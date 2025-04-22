@@ -10,20 +10,20 @@ import com.fasterxml.jackson.databind.*;
 import java.io.IOException;
 
 public class Json {
-     // object mapper
+     // object mapper from jackson.databind pacakge
 private static ObjectMapper myObjectMapper = defaultObjectMapper();
 
 // method that creates a new objectMapper
     private static ObjectMapper defaultObjectMapper(){
-        ObjectMapper om = new ObjectMapper();
+        ObjectMapper defaultObjectMapper = new ObjectMapper();
     // Deserialization option
         /*
         makes parsing to not crash in case there is a property missing
          */
-        om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES , false);
-        return  om;
+        defaultObjectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES , false);
+        return  defaultObjectMapper;
     }
-   // parse json string into a json node
+   // parse json string into a json node return rootnode of the tree
     public static JsonNode parse(String jsonSrc) throws IOException {
   return  myObjectMapper.readTree(jsonSrc);
     }

@@ -8,6 +8,7 @@ import com.sun.net.httpserver.HttpsConfigurator;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Scanner;
 
 /*
 making Configuration manager singleton : because we only need 1 configuration manager
@@ -47,45 +48,41 @@ public class ConfigurationManager {
     this method can throw IO expection  incase the configuration file is not in the given path
     or we have no permission to read file
      */
-    public void loadConfigurationFile(String filepath ) {
-        // reads the entire content for the json file
-        // converts it to a Configuration object
-        //strores it in myCrrenCOnfiguration
-        FileReader fileReader = null;
+    public void loadConfigurationFile(String filepath) {
+        // Read the entire content of the JSON file into a string
+        String jsonString;
 
-        try {
-            fileReader = new FileReader(filepath);
+        try (Scanner scanner = new Scanner(new FileReader(filepath))) {
+            scanner.useDelimiter("\\A"); // "\\A" matches the beginning of input (\\ARegex) the entire file
+            // becomes a single token
+            // becuase Scanner reads the beginning of the file
+            //ans stops only when it reaches the end (no more \\A to match
+            //Scanner.next( read file content in one go
+            /**
+             * By using scanner.useDelimiter("\\A"), we treat the entire file as a single token.
+             * So we can read the full content in one call to scanner.next() instead of looping.
+             * It’s a concise and efficient way to read whole files,
+             * especially useful for small config files like JSON
+             */
+            jsonString = scanner.hasNext() ? scanner.next() : "";
         } catch (FileNotFoundException e) {
-            throw new HttpConfigurationException(e);
+            throw new HttpConfigurationException("Configuration file not found", e);
         }
-        // read the file character by character
-        StringBuffer sb=new StringBuffer();
-        int i;
-        while(true){
-            try {
-                if (!((i=fileReader.read())!=-1)) break;
-            } catch (IOException e) {
-                throw new HttpConfigurationException(e);
-            }
-            sb.append((char)i);
-        }
-        // USes a utility class(JSON) to
-        /*
-        * Parse the Json string into tree (JSon NOde)
-        * convert into a configuration objrct
-        * */
-        JsonNode conf = null;
+
+        // Parse the JSON string into a tree node
+        JsonNode conf;
         try {
-            conf = Json.parse(sb.toString());
+            conf = Json.parse(jsonString);
         } catch (IOException e) {
             throw new HttpConfigurationException("Error parsing the Configuration File", e);
         }
-        try {
-            myCurrentConfiguration = Json.fromJson(conf,Configuration.class);
-        } catch (JsonProcessingException e) {
-            throw new HttpConfigurationException("Error parsing the Configuration file, internal",e);
-        }
 
+        // Convert JSON node to Configuration object
+        try {
+            myCurrentConfiguration = Json.fromJson(conf, Configuration.class);
+        } catch (JsonProcessingException e) {
+            throw new HttpConfigurationException("Error converting Configuration JSON to object", e);
+        }
 
     }
     /*
