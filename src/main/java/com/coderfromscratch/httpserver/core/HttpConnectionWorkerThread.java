@@ -26,7 +26,8 @@ public class HttpConnectionWorkerThread  extends Thread{
             inputStream = socket.getInputStream();
             // to send the data to the browers
             outputStream = socket.getOutputStream();
-            // sent this page to the browser
+
+            //sent this page to the browser
             /*
              * we cannot send the hmtl to the browser because it will not understand it
              * we need to convert into a http response like we need  to insert the http header

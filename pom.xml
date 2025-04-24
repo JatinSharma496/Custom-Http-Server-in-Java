@@ -7,6 +7,7 @@
     <groupId>org.example</groupId>
     <artifactId>CustomHTTPServer</artifactId>
     <version>1.0-SNAPSHOT</version>
+
     <!-- Dependencies used to parse json file , databind allow us to transform the json file into
     a POJO (configuration file )-->
     <dependencies>
@@ -38,7 +39,13 @@
             <version>1.5.8</version>
         </dependency>
         <!-- reload4j implementation -->
-
+        <!-- JUNIT  for  parsing http request -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>RELEASE</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <properties>
