@@ -15,7 +15,9 @@ public class HttpParser {
     private static final int SP =0x20; //32
     private static final int CR =0x0D; //13
     private static final int LF =0x0A; //10
-    public HttpRequest parseHttpRequest(InputStream inputStream) {
+    // i am not making it static so that httpparser will create for each thread
+    public HttpRequest parseHttpRequest(InputStream inputStream) throws IOException {
+        // InputStreamReader convert byte to characters to read the data
         InputStreamReader reader = new InputStreamReader(inputStream, StandardCharsets.US_ASCII);
         HttpRequest request = new HttpRequest();
         parseRequestLine(reader, request);

@@ -9,17 +9,18 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+// this annotation create only one class for all the tests
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class HttpParserTest {
 
     private HttpParser httpParser;
 
     @BeforeAll
-    public void beforeClass(){
+    public  void beforeClass(){
         httpParser = new HttpParser();
     }
-    @Test
+// junit can make new instances of the class for each test cases
+    @Test // this annotations tells junit that it is a test method and it should be tested
     void parseHttpRequest() {
         httpParser.parseHttpRequest(generateValidTestCase());
     }
