@@ -1,6 +1,8 @@
 # Custom HTTP Server in Java
 
 ![HTTP Server](img.png)
+
+
 *Figure 1: Diagram of HTTP Message Structure*
 
 
